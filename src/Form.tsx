@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form"
 import { db } from "./firebase"
 import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
+import Button from '@mui/material/Button';
 
 export function Form() {
     const [allDocs, setAllDocs] = useState<string[]>([])
@@ -24,9 +25,13 @@ export function Form() {
         });
     }
 
-    /*const deleteMatt = async () => {
+    const deleteMatt = async () => {
         await deleteDoc(doc(db, "Patients", "Matt"));
-    }*/
+    }
+
+    const deleteItem = async (name: string) => {
+        await deleteDoc(doc(db, "Patients", name));
+    }
 
     useEffect(() => {
         async function getAllDocuments() {
@@ -56,11 +61,11 @@ export function Form() {
                     placeholder=""
                     {...form.getInputProps('MRN')}
                 />
-                <button type="submit">Submit</button>
+                <Button variant="contained" type="submit">Submit</Button>
             </form>
-            <button onClick={deleteMatt}>Delete Matt</button>
+            <Button variant="contained" onClick={deleteMatt}>Delete Matt</Button>
             <ol>
-                {allDocs.map((doc: string) => <li>{doc}</li>)}
+                {allDocs.map((doc: string) => <li>{doc}<Button variant="contained" onClick={()=>{deleteItem(doc)}}>Delete</Button></li>)}
             </ol>
         </div>
 
