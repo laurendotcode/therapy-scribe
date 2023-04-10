@@ -15,7 +15,7 @@ export const useGetNames = () => {
       setNames(idsList);
     }
     getAllDocuments();
-  });
+  }, []);
 
   return names;
 };

@@ -1,12 +1,4 @@
-import { db } from "./firebase";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   AppShell,
   Navbar,
@@ -19,9 +11,7 @@ import {
   useMantineTheme,
   ScrollArea,
   NavLink,
-  Anchor,
 } from "@mantine/core";
-import { useGetNames } from "./useGetNames";
 import { IconCalendarEvent } from "@tabler/icons-react";
 import { Link, Route, Routes } from "react-router-dom";
 import { Form } from "./Form";

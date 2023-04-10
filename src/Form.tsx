@@ -1,48 +1,38 @@
-import { Button, TextInput } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { Button, List, TextInput } from "@mantine/core";
+import { isInRange, useForm } from "@mantine/form";
 import { db } from "./firebase";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { useGetNames } from "./useGetNames";
 
 export function Form() {
   const names = useGetNames();
-
+  const initialValues: { name: string; MRN: string } = {
+    name: "",
+    MRN: "",
+  };
   const form = useForm({
-    initialValues: {
-      name: "",
+    initialValues,
+    validate: {
+      MRN: isInRange({ min: 18, max: 99 }),
     },
   });
 
-  const name = form.getInputProps("name").value;
-  const MRN = form.getInputProps("MRN").value;
-
-  const onSubmitHandler = async () => {
+  const onSubmitHandler = async ({ name, MRN }: typeof initialValues) => {
     // Add a new document in collection "cities"
     await setDoc(doc(db, "Patients", name), {
       name: name,
-      MRN: MRN,
+      MRN: parseInt(MRN),
       age: 13,
     });
   };
 
-  const deleteMatt = async () => {
-    await deleteDoc(doc(db, "Patients", "Matt"));
-  };
-
-  const deleteItem = async (name: string) => {
+  const deletePatient = async (name: string) => {
     await deleteDoc(doc(db, "Patients", name));
   };
 
   return (
     <div>
-      <form onSubmit={form.onSubmit((values) => onSubmitHandler())}>
+      <form onSubmit={form.onSubmit((values) => onSubmitHandler(values))}>
         <TextInput
           withAsterisk
           label="name"
@@ -55,28 +45,22 @@ export function Form() {
           placeholder=""
           {...form.getInputProps("MRN")}
         />
-        <Button variant="contained" type="submit">
-          Submit
-        </Button>
+        <Button type="submit">Submit</Button>
       </form>
-      <Button variant="contained" onClick={deleteMatt}>
-        Delete Matt
-      </Button>
-      <ol>
-        {names.map((doc: string) => (
-          <li key={doc}>
-            {doc}
+      <List>
+        {names.map((name: string) => (
+          <List.Item key={name}>
+            {name}
             <Button
-              variant="contained"
               onClick={() => {
-                deleteItem(doc);
+                deletePatient(name);
               }}
             >
               Delete
             </Button>
-          </li>
+          </List.Item>
         ))}
-      </ol>
+      </List>
     </div>
   );
 }
