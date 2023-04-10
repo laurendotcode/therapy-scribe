@@ -1,4 +1,4 @@
-import { TextInput } from "@mantine/core";
+import { Button, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { db } from "./firebase";
 import {
@@ -9,10 +9,11 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
+import { useGetNames } from "./useGetNames";
 
 export function Form() {
-  const [allDocs, setAllDocs] = useState<string[]>([]);
+  const names = useGetNames();
+
   const form = useForm({
     initialValues: {
       name: "",
@@ -39,18 +40,6 @@ export function Form() {
     await deleteDoc(doc(db, "Patients", name));
   };
 
-  useEffect(() => {
-    async function getAllDocuments() {
-      const querySnapshot = await getDocs(collection(db, "Patients"));
-      const docsList: string[] = [];
-      querySnapshot.forEach((doc) => {
-        docsList.push(doc.id);
-      });
-      setAllDocs(docsList);
-    }
-    getAllDocuments();
-  });
-
   return (
     <div>
       <form onSubmit={form.onSubmit((values) => onSubmitHandler())}>
@@ -74,8 +63,8 @@ export function Form() {
         Delete Matt
       </Button>
       <ol>
-        {allDocs.map((doc: string) => (
-          <li>
+        {names.map((doc: string) => (
+          <li key={doc}>
             {doc}
             <Button
               variant="contained"

@@ -4,7 +4,6 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,7 +16,7 @@ const firebaseConfig = {
   storageBucket: "therapy-scribe.appspot.com",
   messagingSenderId: "736477240175",
   appId: "1:736477240175:web:542d3bc8579550e735e69a",
-  measurementId: "G-Y0CN3G80RW"
+  measurementId: "G-Y0CN3G80RW",
 };
 
 // Initialize Firebase
@@ -25,11 +24,11 @@ export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
 
 const auth = getAuth();
-createUserWithEmailAndPassword(auth, 'mattanonymous@gmail.com', 'password')
+createUserWithEmailAndPassword(auth, "mattanonymous@gmail.com", "password")
   .then((userCredential) => {
-    // Signed in 
+    // Signed in
     const user = userCredential.user;
-    console.log(user)
+    console.log(user);
     // ...
   })
   .catch((error) => {
@@ -39,5 +38,5 @@ createUserWithEmailAndPassword(auth, 'mattanonymous@gmail.com', 'password')
     // ..
   });
 
-  // Initialize Cloud Firestore and get a reference to the service
+// Initialize Cloud Firestore and get a reference to the service
 export const db = getFirestore(app);
