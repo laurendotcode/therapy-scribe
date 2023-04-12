@@ -4,16 +4,19 @@ import "./index.css";
 import App from "./App";
 import { MantineProvider } from "@mantine/core";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "jotai";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
-        <App />
-      </MantineProvider>
-    </BrowserRouter>
+    <Provider>
+      <BrowserRouter>
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          <App />
+        </MantineProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );

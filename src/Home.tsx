@@ -15,6 +15,9 @@ import {
 import { IconCalendarEvent } from "@tabler/icons-react";
 import { Link, Route, Routes } from "react-router-dom";
 import { Form } from "./Form";
+import { PatientList } from "./PatientList";
+import { PatientChart } from "./PatientChart";
+import { PatientCharts } from "./PatientCharts";
 
 export function Home() {
   const theme = useMantineTheme();
@@ -71,7 +74,7 @@ export function Home() {
       aside={
         <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
           <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
-            <Text>Application sidebar</Text>
+            <PatientList />
           </Aside>
         </MediaQuery>
       }
@@ -102,6 +105,7 @@ export function Home() {
     >
       <Routes>
         <Route path="/Form" element={<Form />} />
+        <Route path="/PatientCharts" element={<PatientCharts />} />
       </Routes>
     </AppShell>
   );
