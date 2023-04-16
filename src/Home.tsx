@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 import { IconCalendarEvent } from "@tabler/icons-react";
 import { Link, Route, Routes } from "react-router-dom";
-import { Form } from "./Form";
+import { PatientIntakeForm } from "./PatientIntakeForm";
 import { PatientList } from "./PatientList";
 import { PatientChart } from "./PatientChart";
 import { PatientCharts } from "./PatientCharts";
@@ -42,7 +42,7 @@ export function Home() {
           width={{ sm: 200, lg: 300 }}
         >
           <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
-            <Link to="/Form">
+            <Link to="/PatientIntakeForm">
               <NavLink
                 label="Intake"
                 icon={<IconCalendarEvent size="1rem" stroke={1.5} />}
@@ -104,7 +104,7 @@ export function Home() {
       }
     >
       <Routes>
-        <Route path="/Form" element={<Form />} />
+        <Route path="/PatientIntakeForm" element={<PatientIntakeForm />} />
         <Route path="/PatientCharts" element={<PatientCharts />} />
       </Routes>
     </AppShell>
